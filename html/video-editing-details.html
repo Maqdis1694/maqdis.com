@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Video Editing Course</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  /* Wave background on top */
+  .wave {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    z-index: -1;
+  }
+
+  .course-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    padding: 30px 40px;
+    max-width: 900px;
+    width: 100%;
+    margin-top: 100px;
+  }
+
+  .course-section h2 {
+    font-weight: 700;
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  }
+
+  .course-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    color: #e0e0ffcc;
+    text-align: center;
+  }
+
+  .course-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .course-images img,
+  .course-images video {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+  }
+  .course-images img:hover,
+  .course-images video:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.6);
+    border-color: #9f9fff;
+  }
+
+  .apply-btn {
+    display: block;
+    margin: 0 auto;
+    background-color: #5a55ca;
+    color: #fff;
+    border: none;
+    padding: 18px 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px #4c48b3;
+    transition: background-color 0.3s ease;
+  }
+  .apply-btn:hover {
+    background-color: #3f3aa8;
+  }
+
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 15px;
+  }
+  .modal.active {
+    display: flex;
+  }
+  .modal-content {
+    background: #1e1e2f;
+    border-radius: 20px;
+    padding: 30px 35px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.8);
+    position: relative;
+    color: #eee;
+    font-weight: 500;
+  }
+  .modal-content h3 {
+    margin-bottom: 22px;
+    color: #90caf9;
+    font-weight: 700;
+    text-align: center;
+  }
+  .modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #cdd6f4;
+  }
+  .modal-content input {
+    width: 100%;
+    padding: 14px 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #2a2a47;
+    color: #ddd;
+    box-shadow: inset 0 0 6px #0008;
+  }
+  .modal-content input::placeholder {
+    color: #aaa;
+  }
+  .modal-content button.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #5a55ca;
+    color: white;
+    border: none;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 6px 20px #4c48b3;
+    transition: background-color 0.3s ease;
+  }
+  .modal-content button.submit-btn:hover {
+    background-color: #3f3aa8;
+  }
+  .close-btn {
+    position: absolute;
+    top: 20px; right: 25px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #bbb;
+    transition: color 0.3s ease;
+  }
+  .close-btn:hover {
+    color: #fff;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #b0b0ffcc;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+
+  @media (max-width: 520px) {
+    .course-description {
+      font-size: 1rem;
+    }
+    .apply-btn {
+      padding: 14px 30px;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="wave"></div>
+
+<div class="course-section" role="main" aria-labelledby="courseTitle">
+  <h2 id="courseTitle">Video Editing Course</h2>
+  <p class="course-description">
+    Master the art of video editing using popular software like Adobe Premiere Pro and Final Cut Pro. 
+    Learn transitions, effects, color correction, and sound design to create professional videos for YouTube, social media, and more.
+  </p>
+  <div class="course-images" aria-label="Gallery of video editing samples">
+    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80" alt="Editing timeline on computer" />
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Editing screen with color correction" />
+    <video autoplay muted loop playsinline aria-label="Example of video editing animation">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Person editing video on laptop" />
+  </div>
+  <button class="apply-btn" id="openModalBtn" aria-haspopup="dialog" aria-controls="modal">Apply Now</button>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="modal-content">
+    <button class="close-btn" id="closeModalBtn" aria-label="Close application form">&times;</button>
+    <h3 id="modalTitle">Apply for Video Editing Course</h3>
+    <p id="modalDesc" style="margin-bottom:20px; color:#bbb; font-size:0.95rem;">
+      Please fill in your details below to apply for this course.
+    </p>
+    <form action="tnk.html" method="post">
+      <label for="name">Your Name</label>
+      <input type="text" name="name" id="name" required placeholder="Enter your full name" />
+
+      <label for="email">Your Email</label>
+      <input type="email" name="email" id="email" required placeholder="Enter your email address" />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" name="phone" id="phone" placeholder="Optional" />
+
+      <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Camal Web Academy. All rights reserved.
+</footer>
+
+<script>
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modal = document.getElementById('modal');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+    // For accessibility: focus first input when modal opens
+    setTimeout(() => {
+      document.getElementById('name').focus();
+    }, 200);
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+    openModalBtn.focus();
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      openModalBtn.focus();
+    }
+  });
+
+  // Close modal on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      openModalBtn.focus();
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>App Design Course</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  .wave {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    z-index: -1;
+  }
+
+  .course-section {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 30px 40px;
+    max-width: 900px;
+    width: 100%;
+    margin-top: 100px;
+    color: #222;
+  }
+
+  .course-section h2 {
+    font-weight: 700;
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .course-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    text-align: center;
+  }
+
+  .course-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .course-images img,
+  .course-images video {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+  }
+  .course-images img:hover,
+  .course-images video:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(255, 204, 0, 0.7);
+    border-color: #f7b500;
+  }
+
+  .apply-btn {
+    display: block;
+    margin: 0 auto;
+    background-color: #f7b500;
+    color: #222;
+    border: none;
+    padding: 18px 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px #cfa500;
+    transition: background-color 0.3s ease;
+  }
+  .apply-btn:hover {
+    background-color: #d89e00;
+  }
+
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 15px;
+  }
+  .modal.active {
+    display: flex;
+  }
+  .modal-content {
+    background: #fff8dc;
+    border-radius: 20px;
+    padding: 30px 35px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+    position: relative;
+    color: #333;
+    font-weight: 500;
+  }
+  .modal-content h3 {
+    margin-bottom: 22px;
+    color: #d89e00;
+    font-weight: 700;
+    text-align: center;
+  }
+  .modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+  }
+  .modal-content input {
+    width: 100%;
+    padding: 14px 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff5cc;
+    color: #333;
+    box-shadow: inset 0 0 6px #0003;
+  }
+  .modal-content input::placeholder {
+    color: #aaa;
+  }
+  .modal-content button.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #f7b500;
+    color: #222;
+    border: none;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 6px 20px #cfa500;
+    transition: background-color 0.3s ease;
+  }
+  .modal-content button.submit-btn:hover {
+    background-color: #d89e00;
+  }
+  .close-btn {
+    position: absolute;
+    top: 20px; right: 25px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+  }
+  .close-btn:hover {
+    color: #555;
+  }
+
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+
+  @media (max-width: 520px) {
+    .course-description {
+      font-size: 1rem;
+    }
+    .apply-btn {
+      padding: 14px 30px;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="wave"></div>
+
+<div class="course-section" role="main" aria-labelledby="courseTitle">
+  <h2 id="courseTitle">App Design Course</h2>
+  <p class="course-description">
+    Master the art of mobile and web app design. Learn UI/UX principles, wireframing, prototyping, and how to create intuitive interfaces using modern tools like Figma and Adobe XD.
+    Build engaging and user-friendly apps that stand out.
+  </p>
+  <div class="course-images" aria-label="Gallery of app design samples">
+    <img src="https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=600&q=80" alt="Person designing on tablet" />
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="App design wireframe sketches" />
+    <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=600&q=80" alt="App UI design on laptop" />
+    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=600&q=80" alt="Designer working with UI sketches" />
+  </div>
+  <button class="apply-btn" id="openModalBtn" aria-haspopup="dialog" aria-controls="modal">Apply Now</button>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="modal-content">
+    <button class="close-btn" id="closeModalBtn" aria-label="Close application form">&times;</button>
+    <h3 id="modalTitle">Apply for App Design Course</h3>
+    <p id="modalDesc" style="margin-bottom:20px; color:#555; font-size:0.95rem;">
+      Please fill in your details below to apply for this course.
+    </p>
+    <form action="tnk.html" method="post">
+      <label for="name">Your Name</label>
+      <input type="text" name="name" id="name" required placeholder="Enter your full name" />
+
+      <label for="email">Your Email</label>
+      <input type="email" name="email" id="email" required placeholder="Enter your email address" />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" name="phone" id="phone" placeholder="Optional" />
+
+      <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Camal Web Academy. All rights reserved.
+</footer>
+
+<script>
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modal = document.getElementById('modal');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+    modal.querySelector('input').focus();
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+    openModalBtn.focus();
+  });
+
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      openModalBtn.focus();
+    }
+  });
+
+  modal.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      const focusableElements = modal.querySelectorAll('input, button');
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
